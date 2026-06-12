@@ -30,10 +30,11 @@ void terminal_loop(void) {
 
 int main(void) {
 	// Initialise the terminal
-	initscr();            // Take control of the terminal
-	cbreak();             // Disable line buffering (pass keys instantly)
-	noecho();             // Hide typed characters
-	keypad(stdscr, TRUE); // Capture special keys (arrows, function keys)
+	initscr();            			// Take control of the terminal
+	cbreak();             			// Disable line buffering (pass keys instantly)
+	noecho();            			// Hide typed characters
+	keypad(stdscr, TRUE);			// Capture special keys (arrows, function keys)
+	mousemask(ALL_MOUSE_EVENTS, NULL);	// Capure mouse events
 
 	// Config terminal window
 	#ifdef _WIN32
@@ -41,7 +42,7 @@ int main(void) {
 		HWND hwnd = FindWindowA(NULL, "Terminal Loop");
 		if (hwnd) {
 			SetMenu(hwnd, NULL);
-			
+
 			// Force Windows to recalculate the title bar hitboxes
 			SetWindowPos(hwnd, NULL, 0, 0, 0, 0, SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER);
 		}

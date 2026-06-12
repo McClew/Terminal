@@ -1,3 +1,4 @@
+#include "mouse.h"
 #include "input.h"
 #include "terminal_handler.h"
 #include <stdio.h>
@@ -28,5 +29,10 @@ void process_keystroke(int character, char *input, int *length, int *cursor_posi
 		handle_arrow_right(length, cursor_position);
 	} else if (character >= 32 && character <= 126) {
 		handle_character(input, length, cursor_position, character);
+	} else if (character == KEY_MOUSE) {
+		MEVENT event;
+		if (getmouse(&event) == OK) {
+			process_mouse();
+		}
 	}
 }

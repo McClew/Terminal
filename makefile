@@ -1,5 +1,5 @@
 # Define compiler and basic flags
-CC = gcc
+CC = clang
 CFLAGS = -Wall -Wextra -Iinclude
 
 # OS detection for cross-platform builds
