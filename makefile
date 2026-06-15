@@ -5,7 +5,8 @@ CFLAGS = -Wall -Wextra -Iinclude
 # OS detection for cross-platform builds
 ifeq ($(OS),Windows_NT)
     TARGET = terminal.exe
-    LIBS = -lpdcurses
+    CFLAGS += -IC:/msys64/ucrt64/include -DNCURSES_MOUSE_VERSION
+    LIBS = -LC:/msys64/ucrt64/lib -lpdcurses
     CLEAN_CMD = del /Q $(TARGET)
 else
     TARGET = terminal
