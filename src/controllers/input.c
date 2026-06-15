@@ -32,7 +32,7 @@ void process_keystroke(int character, char *input, int *length, int *cursor_posi
 	} else if (character == KEY_MOUSE) {
 		MEVENT event;
 		if (getmouse(&event) == OK) {
-			process_mouse();
+			process_mouse(&event);
 		}
 	}
 }

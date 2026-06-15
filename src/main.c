@@ -1,4 +1,5 @@
 #include "input.h"
+#include "ui.h"
 #include <stdlib.h>
 
 // Check OS and include appropriate headers
@@ -10,11 +11,48 @@
 #include <ncurses.h>
 #endif
 
+int app_state = 0; // 0 = main menu, 1 = terminal
+
+void start_game(void) {
+	app_state = 1;
+}
+
+void main_menu(void) {
+	Button start_btn = create_button(10, 30, 20, 3, "START GAME", start_game);
+	
+	clear();
+	draw_button(&start_btn);
+	refresh();
+
+	while (app_state == 0) {
+		int character = getch();
+
+		if (character == KEY_MOUSE) {
+			MEVENT event;
+			if (getmouse(&event) == OK) {
+				if (event.bstate & BUTTON1_CLICKED) {
+					handle_button_click(&start_btn, event.y, event.x);
+				}
+			}
+		} else if (character == 'q' || character == 'Q') {
+			break; // Allow quitting the game from the menu
+		}
+
+		// Keep button drawn
+		clear();
+		draw_button(&start_btn);
+		refresh();
+	}
+}
+
 void terminal_loop(void) {
 	int running = 1;
 	char input[256];
 	int length = 0;
 	int cursor_position = 0;
+
+	// Clear the screen from the main menu
+	clear();
 
 	printw("\n> ");
 	refresh();
@@ -48,8 +86,13 @@ int main(void) {
 		}
 	#endif
 
-	// Output and render
-	terminal_loop();
+	// Enter the main menu first
+	main_menu();
+
+	// If the game started, enter the terminal loop
+	if (app_state == 1) {
+		terminal_loop();
+	}
 
 	// Restore the terminal to normal mode
 	endwin();
