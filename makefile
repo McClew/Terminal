@@ -15,7 +15,7 @@ else
 endif
 
 # Find all source files in specified directories
-SRCS = $(wildcard src/*.c src/controllers/*.c)
+SRCS = $(wildcard src/*.c src/controllers/*.c src/commands/*.c src/views/*.c)
 
 # Default target
 all: $(TARGET)

@@ -1,4 +1,5 @@
 #include "terminal_handler.h"
+#include "commands.h"
 #include "input.h"
 #include <string.h>
 
@@ -66,11 +67,7 @@ void handle_delete(char *input, int *length, int *cursor_position) {
 void handle_enter(char *input, int *length, int *cursor_position, int *running) {
 	input[*cursor_position] = '\0';
 
-	if (strcmp(input, "exit") == 0) {
-		*running = 0;
-	} else {
-		printw("\n%s is an unrecognised command\n> ", input);
-	}
+	execute_command(input, running);
 
 	*cursor_position = 0;
 	*length = 0;
