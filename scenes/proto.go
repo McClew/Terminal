@@ -18,15 +18,28 @@ func RunProto() string {
 		log.Fatalf("Failed to create terminal: %v", err)
 	}
 
-	radarWidget, err := elements.NewRadar()
+	/*
+		radarWidget, err := elements.NewRadar()
+		if err != nil {
+			log.Fatalf("Failed to create radar: %v", err)
+		}
+
+		sideAreaOpts := []container.Option{
+			container.Border(linestyle.Light),
+			container.BorderTitle("RADAR"),
+			container.PlaceWidget(radarWidget),
+		}
+	*/
+
+	signalLossWidget, err := elements.NewSignalLoss()
 	if err != nil {
-		log.Fatalf("Failed to create radar: %v", err)
+		log.Fatalf("Failed to create signal loss: %v", err)
 	}
 
 	sideAreaOpts := []container.Option{
 		container.Border(linestyle.Light),
-		container.BorderTitle("RADAR"),
-		container.PlaceWidget(radarWidget),
+		container.BorderTitle("SIGNAL LOSS"),
+		container.PlaceWidget(signalLossWidget),
 	}
 
 	elements := [][]container.Option{terminalOpts, sideAreaOpts}
