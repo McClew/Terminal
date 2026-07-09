@@ -11,7 +11,7 @@ import (
 	"github.com/mum4k/termdash/terminal/terminalapi"
 )
 
-func StartTerminal() (*tcell.Terminal, *container.Container, context.Context, context.CancelFunc) {
+func StartTerminal() (*tcell.Terminal, *container.Container) {
 	// Initialise Tcell
 	// This takes over the full screen and hides the standard terminal interface.
 	terminal, err := tcell.New()
@@ -25,13 +25,10 @@ func StartTerminal() (*tcell.Terminal, *container.Container, context.Context, co
 		log.Fatalf("Container initialisation failed: %v", err)
 	}
 
-	appContext, cancel := context.WithCancel(context.Background())
-
-	return terminal, rootContainer, appContext, cancel
+	return terminal, rootContainer
 }
 
 func Run(ctx context.Context, cancel context.CancelFunc, terminal *tcell.Terminal, rootContainer *container.Container) {
-	defer terminal.Close()
 	defer cancel()
 
 	quitter := func(k *terminalapi.Keyboard) {

@@ -1,18 +1,21 @@
 package scenes
 
 import (
-	"Terminal/terminal"
+	"context"
 	"log"
+
+	"Terminal/terminal"
 
 	"github.com/mum4k/termdash/align"
 	"github.com/mum4k/termdash/container"
 	"github.com/mum4k/termdash/container/grid"
+	"github.com/mum4k/termdash/terminal/tcell"
 	"github.com/mum4k/termdash/widgets/button"
 	"github.com/mum4k/termdash/widgets/text"
 )
 
-func RunMainMenu() string {
-	term, rootContainer, ctx, cancel := terminal.StartTerminal()
+func RunMainMenu(term *tcell.Terminal, rootContainer *container.Container) string {
+	ctx, cancel := context.WithCancel(context.Background())
 
 	var nextScene string
 

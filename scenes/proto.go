@@ -1,16 +1,19 @@
 package scenes
 
 import (
+	"context"
+	"log"
+
 	"Terminal/elements"
 	"Terminal/terminal"
-	"log"
 
 	"github.com/mum4k/termdash/container"
 	"github.com/mum4k/termdash/linestyle"
+	"github.com/mum4k/termdash/terminal/tcell"
 )
 
-func RunProto() string {
-	term, rootContainer, ctx, cancel := terminal.StartTerminal()
+func RunProto(term *tcell.Terminal, rootContainer *container.Container) string {
+	ctx, cancel := context.WithCancel(context.Background())
 	nextScene := "exit" // Default to exit when Ctrl+C is pressed
 
 	_, terminalOpts, err := elements.NewTerminal()
